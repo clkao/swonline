@@ -4,8 +4,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="//jitsi.jothon.online/libs/lib-jitsi-meet.min.js"></script>
-<script src="common.js"></script>
-<script src="logic-grid.js"></script>
+<script src="common.js?"></script>
+<script src="logic-grid.js?"></script>
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <style>
@@ -532,10 +532,10 @@ function onConnectionSuccess() {
 	room.setLocalParticipantProperty('character', $('#character').val());
 	room.setLocalParticipantProperty('top', parseInt(Game.heroes.me.y));
 	room.setLocalParticipantProperty('left', parseInt(Game.heroes.me.x));
-    room.on(JitsiMeetJS.events.conference.TRACK_ADDED, onRemoteTrack);
-    room.on(JitsiMeetJS.events.conference.TRACK_REMOVED, track => {
-        console.log(`track removed!!!${track}`);
-    });
+//    room.on(JitsiMeetJS.events.conference.TRACK_ADDED, onRemoteTrack);
+//    room.on(JitsiMeetJS.events.conference.TRACK_REMOVED, track => {
+//        console.log(`track removed!!!${track}`);
+//    });
 
     room.on(
         JitsiMeetJS.events.conference.CONFERENCE_JOINED,
@@ -543,8 +543,8 @@ function onConnectionSuccess() {
 
 	room.join();
 
-	JitsiMeetJS.createLocalTracks({ devices: [ 'audio' ] })
-		.then(onLocalTracks);
+//	JitsiMeetJS.createLocalTracks({ devices: [ 'audio' ] })
+//		.then(onLocalTracks);
 };
 
 function disconnect() {

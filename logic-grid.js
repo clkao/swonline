@@ -30,6 +30,7 @@ return null;
 };
 
 var loadRoomData = function(room_name){
+/*
     $.ajax({
         url: api_url + 'rpg/getroom?room=' + encodeURIComponent(room_name),
         success:  function(ret){
@@ -63,13 +64,13 @@ var loadRoomData = function(room_name){
             $('#object-count').text(ret.data.objects.length).data(ret.data.objects);
             calculateWallLayer();
         },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {
+        error: function(XMLHttpRequest, textStatus, errorThrown) {*/
             $.get('room.json', function(room) {
                 map.layers = room;
                 calculateWallLayer();
             }, 'json');
-        }
-    });
+/*        }
+    });*/
 };
 loadRoomData('chat2d');
 
