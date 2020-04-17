@@ -35,6 +35,14 @@ var loadRoomData = function(room_name){
         success:  function(ret){
             map.version = ret.data.room_data.updated_at;
             map.layers = ret.data.room_data.data;
+            if (map.layers._cols) {
+                map.cols = parseInt(map.layers._cols);
+            }
+            if (map.layers._rows) {
+                map.rows = parseInt(map.layers._rows);
+            }
+            Game.camera.maxX = map.cols * map.tsize - Game.camera.width;
+            Game.camera.maxY = map.rows * map.tsize - Game.camera.height;
             Game.objects = {};
             $('#object-list').html('');
             ret.data.objects.map(function(o) {
