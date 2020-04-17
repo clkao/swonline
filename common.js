@@ -463,13 +463,11 @@ Game.getDrawingHeroes = function(){
             ]
 		]);
 
-		// audioLevel
 		objects.push([
             hero.y,
             (function(hero, ctx){
                  var textSize = ctx.measureText(hero.name);
                  var textHeight = textSize.actualBoundingBoxAscent + textSize.actualBoundingBoxDescent;
-                 ctx.fillStyle = 'rgba(255,0,0,' + hero.audioLevel + ')';
 		
                  ctx.fillRect(
                      hero.screenX - textSize.width / 2,
