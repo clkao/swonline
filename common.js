@@ -427,7 +427,6 @@ Game.getDrawingHeroes = function(){
         hero.y = object.y;
         hero.col = 0;
         hero.row = parseInt(object.data.row);
-        hero.audioLevel = 0;
         hero.name = object.data.name;
         hero.messages = [];
         if (object.data.say_type == 3) {
@@ -560,19 +559,6 @@ Game.getDrawingHeroes = function(){
                                  hero.screenY - 20 - height - 4
                          );
                      }
-                 }
-
-                 // video
-                 if (hero.video_dom) {
-                     var videoSettings = hero.video_track.getTrack().getSettings();
-                     var maxSide = Math.max(videoSettings.height, videoSettings.width);
-                     var width = Math.floor(100 * videoSettings.width / maxSide);
-                     var height = Math.floor(100 * videoSettings.height / maxSide);
-                     ctx.drawImage(hero.video_dom,
-                             hero.screenX - width / 2,
-                             hero.screenY - height - 40,
-                             width, height 
-                     );
                  }
             }),[hero, this.ctx]]);
     }
