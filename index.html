@@ -317,37 +317,6 @@ $('#name').keyup(function(e){
 	}
 });
 
-$('#cam-switch').click(function(e){
-    e.preventDefault();
-	if (!Game.heroes.me.camera_track) {
-        JitsiMeetJS.createLocalTracks({ devices: [ 'video' ] })
-            .then(onLocalTracks)
-            .catch(error => {
-                alert('權限錯誤 Permission Error: 無法得到攝影機權限 Error obtaining camera permission. ' + error);
-		});
-	} else {
-		Game.heroes.me.camera_track.mute().then(function(){
-			Game.heroes.me.camera_track.dispose();
-			Game.heroes.me.camera_track.detach(Game.heroes.me.video_dom);
-			delete(Game.heroes.me.video_dom);
-			delete(Game.heroes.me.camera_track);
-			$('#cam-switch').text('Camera: off');
-		});
-	}
-
-});
-
-$('#mic-switch').click(function(e){
-    e.preventDefault();
-    if (Game.heroes.me.audio_track.isMuted()) {
-        Game.heroes.me.audio_track.unmute();
-        $('#mic-switch').text('Mic: on');
-    } else {
-        Game.heroes.me.audio_track.mute();
-        $('#mic-switch').text('Mic: off');
-    }
-});
-
 $('#joined-form').submit(function(e){
     e.preventDefault();
     if (room && $('#say').val()) {
@@ -369,49 +338,6 @@ $('body').keydown(function(e){
 
 function onConnectionFailed() {
     alert('Connection Failed!');
-}
-
-function onRemoteTrack(track) {
-    if (track.isLocal()) {
-        return;
-    }
-    const participant = track.getParticipantId();
-    if (track.getType() == 'audio') {
-        $('#game').append(`<audio id="audio-${participant}" autoplay="1" class="remote" />`);
-        track.attach($(`#audio-${participant}`)[0]);
-
-    } else if (track.getType() == 'video') {
-		if (!Game.heroes[participant].video_dom) {
-			Game.heroes[participant].video_dom = $('<video autoplay="1"></video>')[0];
-			Game.heroes[participant].video_track = track;
-			$('#video-pool').append(Game.heroes[participant].video_dom);
-		}
-		track.attach(Game.heroes[participant].video_dom);
-    }
-}
-
-function onLocalTracks(tracks) {
-    for (let i = 0; i < tracks.length; i++) {
-        if (tracks[i].getType() === 'video') {
-			Game.heroes.me.camera_track = tracks[i];
-			room.addTrack(tracks[i]);
-			if (!Game.heroes.me.video_dom) {
-				Game.heroes.me.video_dom = $('<video autoplay="1"></video>')[0];
-				Game.heroes.me.video_track = tracks[i];
-				$('#video-pool').append(Game.heroes.me.video_dom);
-			}
-			$('#cam-switch').text('Camera: on');
-			tracks[i].attach(Game.heroes.me.video_dom);
-        } else {
-			Game.heroes.me.audio_track = tracks[i];
-            room.addTrack(tracks[i]);
-            tracks[i].addEventListener(JitsiMeetJS.events.track.TRACK_AUDIO_LEVEL_CHANGED, function(audioLevel) {
-                if (!Game.heroes.me.audio_track.isMuted()) {
-					Game.heroes.me.audioLevel = audioLevel;
-                }
-            });
-        }
-    }
 }
 
 function update_member_list() {
@@ -517,12 +443,6 @@ function onConferenceJoined() {
 		Game.heroes[id].name = name;
         update_member_list();
     });
-
-    room.on(JitsiMeetJS.events.conference.TRACK_AUDIO_LEVEL_CHANGED, (id, audioLevel) => {
-        if ('undefined' !== typeof(Game.heroes[id])) {
-			Game.heroes[id].audioLevel = audioLevel;
-        }
-    });
 }
 
 function onConnectionSuccess() {
@@ -532,10 +452,6 @@ function onConnectionSuccess() {
 	room.setLocalParticipantProperty('character', $('#character').val());
 	room.setLocalParticipantProperty('top', parseInt(Game.heroes.me.y));
 	room.setLocalParticipantProperty('left', parseInt(Game.heroes.me.x));
-//    room.on(JitsiMeetJS.events.conference.TRACK_ADDED, onRemoteTrack);
-//    room.on(JitsiMeetJS.events.conference.TRACK_REMOVED, track => {
-//        console.log(`track removed!!!${track}`);
-//    });
 
     room.on(
         JitsiMeetJS.events.conference.CONFERENCE_JOINED,
@@ -543,8 +459,6 @@ function onConnectionSuccess() {
 
 	room.join();
 
-//	JitsiMeetJS.createLocalTracks({ devices: [ 'audio' ] })
-//		.then(onLocalTracks);
 };
 
 function disconnect() {
