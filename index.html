@@ -664,7 +664,6 @@ $('#room-form').submit(function(e){
     $('#joined-form').show();
 
 	JitsiMeetJS.init(initOptions);
-    options.bosh = '//jitsi.jothon.online/http-bind?room=' + encodeURIComponent(room_id);
     confOptions.confID = 'jitsi.jothon.online/' + room_id;
 	connection = new JitsiMeetJS.JitsiConnection(null, null, options);
 
