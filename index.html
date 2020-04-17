@@ -50,9 +50,9 @@ body {
     <div class="panel-heading">Jothon Online 2D RPG</div>
     <div class="panel-body">
         <form id="joined-form" style="flex: 1; display:none" autocomplete="off">
-            <div>Say: <input type="text" id="say" placeholder="say something?"></div>
-            <button id="mic-switch" type="button">Mic: on</button>
-            <button id="cam-switch" type="button">Camera: off</button>
+            <button class="action-emoji" type="button">❤️</button>
+            <button class="action-emoji" type="button">🙏</button>
+            <button class="action-emoji" type="button">👍</button>
         </form>
         <ul class="nav nav-tabs" style="flex: 1">
             <li role="presentation" class="nav-tab active" id="nav-tab-info"><a href="#">Info</a></li>
@@ -324,6 +324,13 @@ $('#joined-form').submit(function(e){
         room.sendTextMessage(say);
         $('#say').val('');
 		Game.heroes.me.messages.push([say, (new Date).getTime() + 20 * 1000]);
+    }
+});
+
+$('button.action-emoji').click(function(e){
+    if (room) {
+        var emoji = $(this).text();
+        Game.heroes.me.messages.push([emoji, (new Date).getTime() + 20 * 1000]);
     }
 });
 
