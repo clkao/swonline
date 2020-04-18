@@ -14,20 +14,21 @@ body {
 }
 
 #game {
-    position: fixed;
+    position: absolute;
     right: 0px;
     width: 80%;
     height: 100%;
 }
 
 #controller {
-    position: fixed;
+    position: absolute;
     height: 100%;
     width: 20%;
     left: 0px;
     top: 0px;
     display: flex;
     flex-direction: column;
+    z-index: 20;
 }
 
 #controller .panel-heading {
@@ -706,6 +707,7 @@ $('body').on('click', '.iframe-div-area', function(e){
             top: '0px',
             width: '100%',
             height: '100%',
+            'z-index': 10,
         });
         $(this).css({
             position: 'absolute',
@@ -722,6 +724,7 @@ $('body').on('click', '.iframe-div-area', function(e){
             top: '50px',
             width: $('body').width() - 100,
             height: window.innerHeight - 100,
+            'z-index': 30,
         });
         $(this).css({
             position: 'fixed',
