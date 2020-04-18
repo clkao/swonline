@@ -204,7 +204,7 @@ Game.getDrawingCustomObjects = function () {
         } else if (object.type == 'iframe') {
             if (!$('#iframe-' + id).length) {
                 var iframe_dom = $('<div></div>').attr('id', 'iframe-' + id);
-                iframe_dom.append($('<iframe></iframe>').attr('src', object.data.iframe_url).css({margin: 0, padding: 0, border: 0, width: '100%', height: '100%'}));
+                iframe_dom.append($('<iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>').attr('src', object.data.iframe_url).css({margin: 0, padding: 0, border: 0, width: '100%', height: '100%'}));
                 iframe_dom.append($('<div></div>').css({position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', 'z-index': 999, cursor: 'pointer'}).addClass('iframe-div-area'));
                 $('body').append(iframe_dom);
             }
