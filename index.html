@@ -321,19 +321,10 @@ $('#name').keyup(function(e){
 	}
 });
 
-$('#joined-form').submit(function(e){
-    e.preventDefault();
-    if (room && $('#say').val()) {
-        var say = $('#say').val();
-        room.sendTextMessage(say);
-        $('#say').val('');
-		Game.heroes.me.messages.push([say, (new Date).getTime() + 20 * 1000]);
-    }
-});
-
 $('button.action-emoji').click(function(e){
     if (room) {
         var emoji = $(this).text();
+        room.sendTextMessage(emoji);
         Game.heroes.me.messages.push([emoji, (new Date).getTime() + 20 * 1000]);
     }
 });
