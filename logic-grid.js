@@ -261,7 +261,7 @@ Game.init = function () {
         [Keyboard.LEFT, Keyboard.RIGHT, Keyboard.UP, Keyboard.DOWN]);
     this.tileAtlas = Loader.getImage('tiles');
 
-    var width = $('body').width();
+    var width = $('body').width() * 0.8;
     var height = window.innerHeight;
     $('#game').attr('width', width).attr('height', height);
     this.heroes = {};
