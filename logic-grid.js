@@ -331,7 +331,7 @@ Game.update = function (delta) {
     this.heroes.me.row = row;
     this.camera.update();
 
-	if ('undefined' !== typeof(room)) {
+    if (room) {
 		if (prev_update_pos === null || (new Date).getTime() - prev_update_pos > 100) {
 			if (this.heroes.me.y_sent != this.heroes.me.y) {
 				this.heroes.me.y_sent = this.heroes.me.y;
