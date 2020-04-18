@@ -265,7 +265,7 @@ Game.init = function () {
     var height = window.innerHeight;
     $('#game').attr('width', width).attr('height', height);
     this.heroes = {};
-    var character = $('#character').val();
+    var character = $('#character .character.choosed').data('character');
 	var name = $('#name').val();
 	this.heroes.me = new Hero(map, 160, 160, character, name);
     this.camera = new Camera(map, width, height);
@@ -331,7 +331,7 @@ Game.update = function (delta) {
     this.heroes.me.row = row;
     this.camera.update();
 
-	if (room) {
+	if ('undefined' !== typeof(room)) {
 		if (prev_update_pos === null || (new Date).getTime() - prev_update_pos > 100) {
 			if (this.heroes.me.y_sent != this.heroes.me.y) {
 				this.heroes.me.y_sent = this.heroes.me.y;

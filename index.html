@@ -45,10 +45,35 @@ body {
     flex-direction: column;
 }
 
+#enter-area {
+    position: absolute;
+    left: 5%;
+    top: 5%;
+    width: 90%;
+    height: 90%;
+    z-index: 9999;
+}
+
+.character.choosed {
+    border: 3px solid blue;
+}
+
 </style>
 </head>
 <body>
 <canvas id="game"></canvas>
+<div id="enter-area">
+    <div class="jumbotron">
+        <h1>Welcome to swonline!</h1>
+        <form id="login-form">
+            <p>
+            Your Name: <input type="text" id="name"><br>
+            Your character: <div id="character"></div>
+            </p>
+            <p><button type="submit" class="btn btn-primary btn-lg" href="#" role="button">Enter</button></p>
+        </form>
+    </div>
+</div>
 <div class="panel panel-default" id="controller">
     <div class="panel-heading">Jothon Online 2D RPG</div>
     <div class="panel-body">
@@ -65,10 +90,6 @@ body {
         </ul>
 
         <div class="panel-tab" id="panel-tab-info">
-            <div>
-                Name: <input type="text" id="name" value="nobody"><br>
-                Character: <select id="character"></select>
-            </div>
             Log:<br>
             <textarea readonly="readonly" id="log" style="width: 100%; flex-grow: 2"></textarea>
         </div>
@@ -152,10 +173,6 @@ body {
 <script>
 let connection = null;
 let room = null;
-
-if (localStorage.getItem('name')) {
-    $('#name').val(localStorage.getItem('name'));
-}
 
 if (location.search.match(/room=([^&]*)/)) {
     var matches = location.search.match(/room=([^&]*)/);
@@ -299,28 +316,28 @@ var characters = [
 ];
 
 characters.map(function(c) {
-        $('#character').append($('<option></option>').text(c));
+        var char_dom = $('<span></span>').css({
+            width: 32,
+            height: 32,
+            display: 'inline-block',
+            'background-position': '-32px -32px',
+            'background-image': 'url("sprite/' + c + '.png")',
+            cursor: 'pointer',
+        }).addClass('character').data('character', c)
+        if (localStorage.getItem('character') == c) {
+            char_dom.addClass('choosed');
+        }
+        $('#character').append(char_dom);
 });
 
-$('#character option').eq(Math.floor(Math.random() * characters.length)).prop('selected', true);
+if (!localStorage.getItem('character')) {
+    $('#character .character').eq(Math.floor(Math.random() * characters.length)).addClass('choosed');
+}
 
-$('#character').change(function(e){
-	if ('undefined' !== typeof(Game.heroes)) {
-		Game.heroes.me.changeCharacter($(this).val());
-	}
-    $('#character').blur();
-
-	if (room) {
-		room.setLocalParticipantProperty('character', $(this).val());
-	}
-}).change();
-
-$('#name').keyup(function(e){
-    localStorage.setItem('name', $('#name').val());
-	Game.heroes.me.name = $(this).val();
-	if (room) {
-		room.setDisplayName($('#name').val());
-	}
+$('#character .character').click(function(e){
+    e.preventDefault();
+    $('#character .character').removeClass('choosed');
+    $(this).addClass('choosed');
 });
 
 $('button.action-emoji').click(function(e){
@@ -453,7 +470,7 @@ function onConnectionSuccess() {
     confOptions.confID = 'jitsi.jothon.online/' + room_id;
     room = connection.initJitsiConference(room_id, confOptions);
     room.setDisplayName($('#name').val());
-	room.setLocalParticipantProperty('character', $('#character').val());
+	room.setLocalParticipantProperty('character', $('#character .character.choosed').data('character'));
 	room.setLocalParticipantProperty('top', parseInt(Game.heroes.me.y));
 	room.setLocalParticipantProperty('left', parseInt(Game.heroes.me.x));
 
@@ -663,28 +680,34 @@ loadRoomData(room_id);
 
 Game.onload(function(){
     var d = new Promise(function(resolve, reject) {
-        var name = prompt('What is your name?', localStorage.getItem('name'));
-        localStorage.setItem('name', name);
-        $('#name').val(name);
-        $('#joined-form').show();
+        $('#name').val(localStorage.getItem('name'));
+        $('#name').focus();
+        $('#login-form').submit(function(e){
+            e.preventDefault();
+            var name = $('#name').val();
+            localStorage.setItem('name', name);
+            localStorage.setItem('character', $('#character .character.choosed').data('character'));
+            $('#enter-area').hide();
+            $('#joined-form').show();
 
-        JitsiMeetJS.init(initOptions);
-        confOptions.confID = 'jitsi.jothon.online/' + room_id;
-        connection = new JitsiMeetJS.JitsiConnection(null, null, options);
+            JitsiMeetJS.init(initOptions);
+            confOptions.confID = 'jitsi.jothon.online/' + room_id;
+            connection = new JitsiMeetJS.JitsiConnection(null, null, options);
 
-        connection.addEventListener(
-            JitsiMeetJS.events.connection.CONNECTION_ESTABLISHED,
-            onConnectionSuccess);
-        connection.addEventListener(
-            JitsiMeetJS.events.connection.CONNECTION_FAILED,
-            onConnectionFailed);
-        connection.addEventListener(
-            JitsiMeetJS.events.connection.CONNECTION_DISCONNECTED,
-            disconnect);
+            connection.addEventListener(
+                JitsiMeetJS.events.connection.CONNECTION_ESTABLISHED,
+                onConnectionSuccess);
+            connection.addEventListener(
+                JitsiMeetJS.events.connection.CONNECTION_FAILED,
+                onConnectionFailed);
+            connection.addEventListener(
+                JitsiMeetJS.events.connection.CONNECTION_DISCONNECTED,
+                disconnect);
 
-        connection.connect();
-        resolve();
-    });
+            connection.connect();
+            resolve();
+        });
+    })
     return d;
 });
 
