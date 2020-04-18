@@ -30,12 +30,21 @@ return null;
 };
 
 var loadRoomData = function(room_name){
-/*
     $.ajax({
         url: api_url + 'rpg/getroom?room=' + encodeURIComponent(room_name),
         success:  function(ret){
             map.version = ret.data.room_data.updated_at;
             map.layers = ret.data.room_data.data;
+            if (map.layers._cols) {
+                map.cols = parseInt(map.layers._cols);
+            }
+            if (map.layers._rows) {
+                map.rows = parseInt(map.layers._rows);
+            }
+            if (Game.camera) {
+                Game.camera.maxX = map.cols * map.tsize - Game.camera.width;
+                Game.camera.maxY = map.rows * map.tsize - Game.camera.height;
+            }
             Game.objects = {};
             $('#object-list').html('');
             ret.data.objects.map(function(o) {
@@ -64,13 +73,13 @@ var loadRoomData = function(room_name){
             $('#object-count').text(ret.data.objects.length).data(ret.data.objects);
             calculateWallLayer();
         },
-        error: function(XMLHttpRequest, textStatus, errorThrown) {*/
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
             $.get('room.json', function(room) {
                 map.layers = room;
                 calculateWallLayer();
             }, 'json');
-/*        }
-    });*/
+        }
+    });
 };
 loadRoomData('chat2d');
 

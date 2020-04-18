@@ -1,5 +1,5 @@
 // From: https://mozdevs.github.io/gamedev-js-tiles/common.js
-var api_url = 'https://intro.g0v.ronny.tw/api/';
+var api_url = 'https://meet.jothon.online/api/';
 
 var Loader = {
     images: {}
@@ -200,6 +200,22 @@ Game.getDrawingCustomObjects = function () {
                 target_height,
                 ]
             ]);
+        } else if (object.type == 'iframe') {
+            if (!$('#iframe-' + object.object_id).length) {
+                $('body').append($('<iframe></iframe>').attr('id', 'iframe-' + object.object_id).attr('src', object.data.iframe_url));
+            }
+            var canvas_width = object.x2 - object.x + 32;
+            var canvas_height = object.y2 - object.y + 32;
+            $('#iframe-' + object.object_id).css({
+                width: canvas_width,
+                height: canvas_height,
+                position: 'fixed',
+                left: (object.x + object.x2) / 2 - canvas_width / 2 - this.camera.x,
+                top: (object.y + object.y2) / 2 - canvas_height / 2 - this.camera.y
+                border: '0px',
+                margin: '0px',
+                padding: '0px',
+            });
         }
     }
     return objects;
@@ -388,7 +404,7 @@ Game.getDrawingWalls = function () {
 			var tile = map.getTile('calculate_wall', c, r);
             var x = (c - startCol) * map.tsize + offsetX;
             var y = (r - startRow) * map.tsize + offsetY;
-            if (false !== tile && 'undefined' !== typeof(tile)) {
+            if (false !== tile && 'undefined' !== typeof(tile) && 'undefined' !== typeof(tile_map[tile])) {
 				tileX = tile_map[tile][0];
 				tileY = tile_map[tile][1];
                 objects.push([
@@ -427,7 +443,6 @@ Game.getDrawingHeroes = function(){
         hero.y = object.y;
         hero.col = 0;
         hero.row = parseInt(object.data.row);
-        hero.audioLevel = 0;
         hero.name = object.data.name;
         hero.messages = [];
         if (object.data.say_type == 3) {
@@ -464,13 +479,11 @@ Game.getDrawingHeroes = function(){
             ]
 		]);
 
-		// audioLevel
 		objects.push([
             hero.y,
             (function(hero, ctx){
                  var textSize = ctx.measureText(hero.name);
                  var textHeight = textSize.actualBoundingBoxAscent + textSize.actualBoundingBoxDescent;
-                 ctx.fillStyle = 'rgba(255,0,0,' + hero.audioLevel + ')';
 		
                  ctx.fillRect(
                      hero.screenX - textSize.width / 2,
@@ -560,19 +573,6 @@ Game.getDrawingHeroes = function(){
                                  hero.screenY - 20 - height - 4
                          );
                      }
-                 }
-
-                 // video
-                 if (hero.video_dom) {
-                     var videoSettings = hero.video_track.getTrack().getSettings();
-                     var maxSide = Math.max(videoSettings.height, videoSettings.width);
-                     var width = Math.floor(100 * videoSettings.width / maxSide);
-                     var height = Math.floor(100 * videoSettings.height / maxSide);
-                     ctx.drawImage(hero.video_dom,
-                             hero.screenX - width / 2,
-                             hero.screenY - height - 40,
-                             width, height 
-                     );
                  }
             }),[hero, this.ctx]]);
     }
