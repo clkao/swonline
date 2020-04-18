@@ -484,13 +484,6 @@ Game.getDrawingHeroes = function(){
             (function(hero, ctx){
                  var textSize = ctx.measureText(hero.name);
                  var textHeight = textSize.actualBoundingBoxAscent + textSize.actualBoundingBoxDescent;
-		
-                 ctx.fillRect(
-                     hero.screenX - textSize.width / 2,
-                     hero.screenY - 20 - textHeight,
-                     textSize.width,
-                     textHeight
-                 );
 
                  // name
                  ctx.font = 'normal 12px Arial';
