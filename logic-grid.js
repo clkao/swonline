@@ -81,7 +81,6 @@ var loadRoomData = function(room_name){
         }
     });
 };
-loadRoomData('chat2d');
 
 function Camera(map, width, height) {
     this.x = 0;

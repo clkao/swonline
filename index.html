@@ -65,10 +65,6 @@ body {
             <div>
                 Name: <input type="text" id="name" value="nobody"><br>
                 Character: <select id="character"></select>
-                <form id="room-form">
-                    Room: <input type="text" name="room-name" value="chat2d">
-                    <button type="submit">Join</button>
-                </form>
             </div>
             Log:<br>
             <textarea readonly="readonly" id="log" style="width: 100%; flex-grow: 2"></textarea>
@@ -501,9 +497,9 @@ const options = {
 
 var confOptions = {
     openBridgeChannel: true,
-    confID: 'chat2d',
+    confID: '',
 };
-var room_id = 'chat2d';;
+var room_id = 'swonline';;
 
 JitsiMeetJS.setLogLevel(JitsiMeetJS.logLevels.ERROR);
 const initOptions = {
@@ -672,9 +668,7 @@ var add_object_step3_enable = function(id){
 var name = prompt('What is your name?', localStorage.getItem('name'));
 localStorage.setItem('name', name);
 $('#name').val(name);
-room_id = $('#room-form [name="room-name"]').val();
 loadRoomData(room_id);
-$('#room-form').hide();
 $('#joined-form').show();
 
 JitsiMeetJS.init(initOptions);
