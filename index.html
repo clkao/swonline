@@ -691,6 +691,16 @@ connection.addEventListener(
     disconnect);
 
 connection.connect();
+$(window).bind('beforeunload', unload);
+$(window).bind('unload', unload);
+function unload() {
+    if (room) {
+        room.leave();
+    }
+    if (connection) {
+        connection.disconnect();
+    }
+}
 
 </script>
 </body>
