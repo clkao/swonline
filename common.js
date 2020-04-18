@@ -203,7 +203,10 @@ Game.getDrawingCustomObjects = function () {
             ]);
         } else if (object.type == 'iframe') {
             if (!$('#iframe-' + object.object_id).length) {
-                $('body').append($('<iframe></iframe>').attr('id', 'iframe-' + object.object_id).attr('src', object.data.iframe_url));
+                var iframe_dom = $('<div></div>').attr('id', 'iframe-' + object.object_id);
+                iframe_dom.append($('<iframe></iframe>').attr('src', object.data.iframe_url).css({margin: 0, padding: 0, border: 0, width: '100%', height: '100%'}));
+                iframe_dom.append($('<div></div>').css({position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', 'z-index': 999, cursor: 'pointer'}).addClass('iframe-div-area'));
+                $('body').append(iframe_dom);
             }
             var canvas_width = object.x2 - object.x + 32;
             var canvas_height = object.y2 - object.y + 32;
