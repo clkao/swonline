@@ -461,8 +461,15 @@ Game.getDrawingHeroes = function(){
             case '3':
                 hero.messages = object.data.say.split("\n").map(function(e){ return [e]; });
                 break;
-            case '4':
+            case '4':                
                 hero.messages = object.data.say.split("\n").map(function(e){ return [e]; });
+                break;
+            case '5':
+                var w = hero.x - Game.heroes.me.x;
+                var h = hero.y - Game.heroes.me.y;
+                if (w * w + h * h < 64 * 64) {
+                    hero.messages = object.data.say.split("\n").map(function(e){ return [e]; });
+                }
                 break;
         }
 
@@ -542,6 +549,7 @@ Game.getDrawingHeroes = function(){
                     var duration = 4 + (hero.messages.length % 2);
                     switch(hero.say_type){
                         case '4':
+                        case '5':
                             message_idx = parseInt(((new Date()).getTime()/(1000*duration)))%hero.messages.length
                             metric = ctx.measureText(hero.messages[message_idx][0]);
                             width = Math.max(width, metric.width);
@@ -600,7 +608,8 @@ Game.getDrawingHeroes = function(){
                              hero.screenY - 20 - height - 4
                              );
                     switch (hero.say_type){
-                        case '4':                            
+                        case '4':
+                        case '5':
                             let m = hero.messages[message_idx] 
                             metric = ctx.measureText(m[0]);
                             height -= (metric.actualBoundingBoxAscent + metric.actualBoundingBoxDescent + 2);
