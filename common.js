@@ -200,6 +200,22 @@ Game.getDrawingCustomObjects = function () {
                 target_height,
                 ]
             ]);
+        } else if (object.type == 'iframe') {
+            if (!$('#iframe-' + object.object_id).length) {
+                $('body').append($('<iframe></iframe>').attr('id', 'iframe-' + object.object_id).attr('src', object.data.iframe_url));
+            }
+            var canvas_width = object.x2 - object.x + 32;
+            var canvas_height = object.y2 - object.y + 32;
+            $('#iframe-' + object.object_id).css({
+                width: canvas_width,
+                height: canvas_height,
+                position: 'fixed',
+                left: (object.x + object.x2) / 2 - canvas_width / 2 - this.camera.x,
+                top: (object.y + object.y2) / 2 - canvas_height / 2 - this.camera.y
+                border: '0px',
+                margin: '0px',
+                padding: '0px',
+            });
         }
     }
     return objects;
