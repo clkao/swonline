@@ -7,8 +7,12 @@
 <script src="//jitsi.jothon.online/libs/lib-jitsi-meet.min.js"></script>
 <script src="common.js?"></script>
 <script src="logic-grid.js?"></script>
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.27/bootstrap-native-v4.min.js"></script>
+<!--
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+-->
 <style>
 body {
     overflow: hidden;
@@ -49,13 +53,22 @@ body {
 
 #enter-area {
     position: absolute;
-    left: 5%;
-    top: 5%;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: rgba(0,0,0,.6);
+}
+#enter-area .card {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
     width: 90%;
     height: 90%;
-    z-index: 9999;
-	background: white;
-	border: 10px black solid;
 }
 
 #login-form {
@@ -71,6 +84,8 @@ body {
 #login-form .name-input,.character-input {
     flex: 0;
 }
+#login-form .character-input { padding: 6px 0; }
+#login-form .character { border-radius: 3px }
 
 #login-form .character-input {
     overflow: scroll;
@@ -81,6 +96,15 @@ body {
     flex: 0;
 }
 
+.character {
+    border: 3px solid transparent;
+    background-repeat: no-repeat;
+    background-position: -35px -35px!important;
+    display: inline-block;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+}
 .character.choosed {
     border: 3px solid blue;
 }
@@ -113,37 +137,51 @@ body {
     -o-touch-callout: none;
     touch-callout: none;
 }
-
+.nav-item {
+    font-size: .85em;
+}
+.nav-item .nav-link {
+    padding: .3rem .6rem;
+}
 </style>
 </head>
 <body>
 <canvas id="game"></canvas>
-<div id="enter-area">
+<div id="enter-area"><div class="card shadow-lg"><div class="card-body">
         <form id="login-form">
-            <h1>Welcome to swonline!</h1>
-            <p class="name-input">Your Name: <input type="text" id="name"></p>
-            <p class="character-title">Chosse one</p>
-            <p class="character-input" id="character"></p>
+            <h1 class="display-4 font-weight-bold">Welcome to swonline!</h1>
+            <p class="text-muted"> Online Memorial Ceremony </p>
+            <div class="form-group mb-4">
+              <label class="name-input">Your Name</label>
+              <input type="text" id="name" class="form-control">
+            </div>
+            <div class="form-group mb-4">
+              <label class="character-title">Choose Your Avatar</label>
+              <p class="character-input" id="character"></p>
+            </div>
+            <hr>
             <p class="button-area"><button type="submit" class="btn btn-primary btn-lg" href="#" role="button">Enter</button></p>
         </form>
-</div>
-<div class="panel panel-default" id="controller">
-    <div class="panel-heading">昇瑋線上追思會: <span id="member-count">0</span>人上線</div>
-    <div class="panel-body">
-        <form id="joined-form" style="flex: 0; display:none" autocomplete="off">
-            <button class="action-emoji" type="button">❤️</button>
-            <button class="action-emoji" type="button">🙏</button>
-            <button class="action-emoji" type="button">👍</button>
-            <button class="action-emoji" type="button">🍺</button>
-            <button class="action-emoji" type="button">🌸</button>
+</div></div></div>
+<div class="card" id="controller">
+    <div class="card-header">昇瑋線上追思會: <span id="member-count">0</span>人上線</div>
+        <form id="joined-form" style="flex: 0; display:none;padding:.25em" autocomplete="off">
+            <div class="btn-group w-100">
+            <button class="btn btn-sm btn-outline-secondary action-emoji" type="button">❤️</button>
+            <button class="btn btn-sm btn-outline-secondary action-emoji" type="button">🙏</button>
+            <button class="btn btn-sm btn-outline-secondary action-emoji" type="button">👍</button>
+            <button class="btn btn-sm btn-outline-secondary action-emoji" type="button">🍺</button>
+            <button class="btn btn-sm btn-outline-secondary action-emoji" type="button">🌸</button>
+            </div>
         </form>
-        <ul class="nav nav-tabs" style="flex: 0">
-            <li role="presentation" class="nav-tab active" id="nav-tab-info"><a href="#">Info</a></li>
-            <li role="presentation" class="nav-tab" id="nav-tab-chat"><a href="#">Chat</a></li>
-            <li role="presentation" class="nav-tab" id="nav-tab-member"><a href="#">Members(<span id="member-count">0</span>)</a></li>
-            <li role="presentation" class="nav-tab" id="nav-tab-object"><a href="#">Objects(<span id="object-count">0</span>)</a></li>
+        <ul class="text-sm nav nav-tabs" style="flex: 0">
+            <li role="presentation" class="nav-item" id="nav-tab-info"><a class="nav-link active" href="#">資訊</a></li>
+            <li role="presentation" class="nav-item" id="nav-tab-chat"><a class="nav-link" href="#">聊天</a></li>
+            <li role="presentation" class="nav-item" id="nav-tab-member"><a class="nav-link" href="#">成員(<span id="member-count">0</span>)</a></li>
+            <li role="presentation" class="nav-item" id="nav-tab-object"><a class="nav-link" href="#">物件(<span id="object-count">0</span>)</a></li>
         </ul>
 
+    <div class="card-body">
         <div class="panel-tab" id="panel-tab-info">
             ➡️ 移動：使用方向鍵或點擊地圖上任何地方<br>
             ❤️ 說話：點擊上方表情符號<br>
@@ -164,7 +202,7 @@ body {
             <ul id="member-list"></ul>
         </div>
         <div class="panel-tab" id="panel-tab-object" style="display: none">
-            <button id="add-object">Add Object</button>
+            <button class="btn btn-outline-secondary mb-2" id="add-object">Add Object</button>
             <ol id="object-list">
             </ol>
             <form method="post" id="form-add-object" style="display: none">
@@ -225,12 +263,12 @@ body {
         </div>
     </div>
     <script>
-        $('.nav-tab').click(function(e){
+        $('.nav-item').click(function(e){
                 e.preventDefault();
                 $('.panel-tab').hide();
                 $('#panel-tab-' + $(this).attr('id').split('-')[2]).show();
-                $('.nav-tab').removeClass('active');
-                $(this).addClass('active');
+                $('.nav-item .nav-link').removeClass('active');
+                $(this).find('.nav-link').addClass('active');
         });
     </script>
 </div>
@@ -382,12 +420,7 @@ var characters = [
 
 characters.map(function(c) {
         var char_dom = $('<span></span>').css({
-            width: 32,
-            height: 32,
-            display: 'inline-block',
-            'background-position': '-32px -32px',
             'background-image': 'url("sprite/' + c + '.png")',
-            cursor: 'pointer',
         }).addClass('character').data('character', c)
         if (localStorage.getItem('character') == c) {
             char_dom.addClass('choosed');
