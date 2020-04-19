@@ -142,13 +142,14 @@ Game.getDrawingObjects = function () {
             var x = (c - startCol) * map.tsize + offsetX;
             var y = (r - startRow) * map.tsize + offsetY;
             if (tile !== null && 'undefined' !== typeof(tile_map[tile])) {
-				tileX = tile_map[tile][0];
-				tileY = tile_map[tile][1];
+                tileS = tile_map[tile][0];
+                tileX = tile_map[tile][1];
+                tileY = tile_map[tile][2];
                 objects.push([
                     r * 32,
                     'drawImage',
                     [
-                    this.tileAtlas, // image
+                    this.tileAtlas[tileS], // image
                     tileX * map.tsize, // source x
                     tileY * map.tsize, // source y
                     map.tsize, // source width
@@ -287,64 +288,64 @@ function calculateWallLayer() {
 };
 
 var tile_map = {
-    'screen_lt': [34,34],
-    'screen_t': [36,34],
-    'screen_rt': [35,34],
-    'screen_l': [36,35],
-    'screen_c': [38,34],
-    'screen_r': [37,34],
-    'screen_lb': [34,35],
-    'screen_b': [37,35],
-    'screen_rb': [35,35],
-    'carpet1_1': [2,11],
-    'carpet1_2': [3,11],
-    'carpet1_3': [5,11],
-    'computer_table1': [12,3],
-    'computer_table2': [12,4],
-	'ground': [18,1],
-    'ground1': [1,0],
-    'ground2': [2,0],
-    'ground3': [3,0],
-    'ground4': [4,0],
-    'ground5': [5,0],
-    'ground6': [6,0],
-    'ground7': [7,0],
-	'pile': [7,6],
-	'wall_': [0,2],
-	'wall_l': [2,2],
-	'wall_r': [1,2],
-	'wall_lr': [3,2],
-	'roof_': [14,1],
-	'roof_u': [7,2],
-	'roof_r': [1,1],
-	'roof_ur': [8,2],
-	'roof_d': [7,1],
-	'roof_ud': [10,2],
-	'roof_rd': [8,1],
-	'roof_urd': [6,1],
-	'roof_l': [2,1],
-	'roof_ul': [9,2],
-	'roof_rl': [10,1],
-	'roof_url': [6,2],
-	'roof_dl': [9,1],
-	'roof_udl': [5,2],
-	'roof_rdl': [5,1],
-	'roof_urdl': [15,2],
-	'chair': [10, 13],
-    'tableA_1': [6,13],
-    'tableA_2': [7,13],
-    'tableA_3': [6,14],
-    'tableA_4': [7,14],
-    'bar_u': [2, 12],
-    'bar_l': [2,13],
-    'bar_r': [0,14],
-    'bar_ul': [12,12],
-    'bar_d': [13,12],
-    'bar_lr': [1,14],
-    'bar_ud': [3,13],
-    'food_a': [3,5],
-    'food_b': [3,6],
-    'food_c':[4,6],
+    'screen_lt': [0,34,34],
+    'screen_t': [0,36,34],
+    'screen_rt': [0,35,34],
+    'screen_l': [0,36,35],
+    'screen_c': [0,38,34],
+    'screen_r': [0,37,34],
+    'screen_lb': [0,34,35],
+    'screen_b': [0,37,35],
+    'screen_rb': [0,35,35],
+    'carpet1_1': [0,2,11],
+    'carpet1_2': [0,3,11],
+    'carpet1_3': [0,5,11],
+    'computer_table1': [0,12,3],
+    'computer_table2': [0,12,4],
+	'ground': [0,18,1],
+    'ground1': [0,1,0],
+    'ground2': [0,2,0],
+    'ground3': [0,3,0],
+    'ground4': [0,4,0],
+    'ground5': [0,5,0],
+    'ground6': [0,6,0],
+    'ground7': [0,7,0],
+	'pile': [0,7,6],
+	'wall_': [0,0,2],
+	'wall_l': [0,2,2],
+	'wall_r': [0,1,2],
+	'wall_lr': [0,3,2],
+	'roof_': [0,14,1],
+	'roof_u': [0,7,2],
+	'roof_r': [0,1,1],
+	'roof_ur': [0,8,2],
+	'roof_d': [0,7,1],
+	'roof_ud': [0,10,2],
+	'roof_rd': [0,8,1],
+	'roof_urd': [0,6,1],
+	'roof_l': [0,2,1],
+	'roof_ul': [0,9,2],
+	'roof_rl': [0,10,1],
+	'roof_url': [0,6,2],
+	'roof_dl': [0,9,1],
+	'roof_udl': [0,5,2],
+	'roof_rdl': [0,5,1],
+	'roof_urdl': [0,15,2],
+	'chair': [0,10, 13],
+    'tableA_1': [0,6,13],
+    'tableA_2': [0,7,13],
+    'tableA_3': [0,6,14],
+    'tableA_4': [0,7,14],
+    'bar_u': [0,2, 12],
+    'bar_l': [0,2,13],
+    'bar_r': [0,0,14],
+    'bar_ul': [0,12,12],
+    'bar_d': [0,13,12],
+    'bar_lr': [0,1,14],
+    'bar_ud': [0,3,13],
+    'food_a': [0,3,5],
+    'food_b': [0,3,6],
+    'food_c':[0,4,6],
 };
 
 var tile_groups = {
@@ -376,10 +377,11 @@ Game.drawGroundLayer = function () {
                 if ('undefined' === typeof(tile_map[tile])) {
                     tile = 'ground';
                 }
-				tileX = tile_map[tile][0];
-				tileY = tile_map[tile][1];
+                tileS = tile_map[tile][0];
+                tileX = tile_map[tile][1];
+                tileY = tile_map[tile][2];
                 this.ctx.drawImage(
-                    this.tileAtlas, // image
+                    this.tileAtlas[tileS], // image
                     tileX * map.tsize, // source x
                     tileY * map.tsize, // source y
                     map.tsize, // source width
@@ -409,13 +411,14 @@ Game.getDrawingWalls = function () {
             var x = (c - startCol) * map.tsize + offsetX;
             var y = (r - startRow) * map.tsize + offsetY;
             if (false !== tile && 'undefined' !== typeof(tile) && 'undefined' !== typeof(tile_map[tile])) {
-				tileX = tile_map[tile][0];
-				tileY = tile_map[tile][1];
+                tileS = tile_map[tile][0];
+                tileX = tile_map[tile][1];
+                tileY = tile_map[tile][2];
                 objects.push([
                     (map.getTile('calculate_wall_base', c, r)) * 32,
                     'drawImage',
                     [
-                    this.tileAtlas, // image
+                    this.tileAtlas[tileS], // image
                     tileX * map.tsize, // source x
                     tileY * map.tsize, // source y
                     map.tsize, // source width

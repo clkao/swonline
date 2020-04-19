@@ -242,7 +242,10 @@ Hero.prototype._collide = function (dirx, diry) {
     }
 };
 
-var load_functions = [Loader.loadImage('tiles', 'sprite/open_tileset.png')];
+var load_functions = [
+    Loader.loadImage('tiles', 'sprite/open_tileset.png'),
+    Loader.loadImage('moon_tiles', 'sprite/moon_tileset.png')
+];
 Game.onload = function(callback) {
     if (this.isLoad) {
         callback();
@@ -259,7 +262,7 @@ Game.objects = {};
 Game.init = function () {
     Keyboard.listenForEvents(
         [Keyboard.LEFT, Keyboard.RIGHT, Keyboard.UP, Keyboard.DOWN]);
-    this.tileAtlas = Loader.getImage('tiles');
+    this.tileAtlas = [Loader.getImage('tiles'), Loader.getImage('moon_tiles')];
 
     var width = $('#game').width();
     var height = $('#game').height();
