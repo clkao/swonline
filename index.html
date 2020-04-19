@@ -479,6 +479,9 @@ function onConferenceJoined() {
             }
             if (ts_number + 20 * 1000 < (new Date).getTime()) return;
 			Game.heroes[id].messages.push([text, ts_number + 20 * 1000]);
+            if (Game.heroes[id].messages.length > 3)
+                Game.heroes[id].messages.shift();
+
         }
     });
 
