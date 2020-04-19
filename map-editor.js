@@ -238,8 +238,8 @@ Game.update = function (delta) {
         diry = 1; row = 0;
     } else {
         row = this.heroes.me.row;
-        Game.isWayClick = false; 
-    } 
+        Game.isWayClick = false;
+    }
 
     if ($('[name="layer"]:checked').val() == 'result') {
         this.heroes.me.move(delta, dirx, diry);
@@ -305,7 +305,7 @@ Game.render = function () {
     } else if ($('[name="layer"]:checked').val() == 'wall') {
         objects = objects.concat(this.getDrawingWalls().map(function(o) { o[3] = 0.5; return o}));
         objects = objects.concat(this.getDrawingObjects().map(function(o) { o[3] = 0.5; return o}));
-        
+
     } else if ($('[name="layer"]:checked').val() == 'object') {
         objects = objects.concat(this.getDrawingWalls().map(function(o) { o[3] = 0.5; return o}));
         objects = objects.concat(this.getDrawingObjects());

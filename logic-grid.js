@@ -315,7 +315,7 @@ Game.update = function (delta) {
     else if (Keyboard.isDown(Keyboard.RIGHT)) { dirx = 1; row = 2; }
     else if (Keyboard.isDown(Keyboard.UP)) { diry = -1; row = 3; }
     else if (Keyboard.isDown(Keyboard.DOWN)) { diry = 1; row = 0; }
-    else { row = this.heroes.me.row; } 
+    else { row = this.heroes.me.row; }
 
     this.heroes.me.move(delta, dirx, diry);
 	var now = (new Date).getTime();
@@ -344,7 +344,7 @@ Game.update = function (delta) {
 			prev_update_pos = (new Date).getTime();
 		}
 	}
-	
+
 };
 
 Game.render = function () {

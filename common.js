@@ -461,7 +461,7 @@ Game.getDrawingHeroes = function(){
             case '3':
                 hero.messages = object.data.say.split("\n").map(function(e){ return [e]; });
                 break;
-            case '4':                
+            case '4':
                 hero.messages = object.data.say.split("\n").map(function(e){ return [e]; });
                 break;
             case '5':
@@ -527,23 +527,23 @@ Game.getDrawingHeroes = function(){
                  ctx.textAlign = 'center';
                  ctx.strokeStyle = "black";
                  ctx.lineWidth = 3;
-                 ctx.strokeText(hero.name, 
+                 ctx.strokeText(hero.name,
                      hero.screenX,
                      hero.screenY - 20
                  );
                  ctx.textAlign = 'center';
                  ctx.fillStyle = "white";
-                 ctx.fillText(hero.name, 
+                 ctx.fillText(hero.name,
                      hero.screenX,
                      hero.screenY - 20
                  );
-		
+
                  // message
                  if (hero.messages.length) {
                      var width = 0;
                      var height = 0;
                      metric = ctx.measureText(hero.name + ':');
-                     width = Math.max(width, metric.width);                     
+                     width = Math.max(width, metric.width);
                      height += metric.actualBoundingBoxAscent + metric.actualBoundingBoxDescent + 2;
                     var message_idx = -1;
                     var duration = 4 + (hero.messages.length % 2);
@@ -562,7 +562,7 @@ Game.getDrawingHeroes = function(){
                                 height += metric.actualBoundingBoxAscent + metric.actualBoundingBoxDescent + 2;
                             }
                     }
-                     
+
 
                      ctx.beginPath();
                      ctx.fillStyle = 'white';
@@ -610,7 +610,7 @@ Game.getDrawingHeroes = function(){
                     switch (hero.say_type){
                         case '4':
                         case '5':
-                            let m = hero.messages[message_idx] 
+                            let m = hero.messages[message_idx]
                             metric = ctx.measureText(m[0]);
                             height -= (metric.actualBoundingBoxAscent + metric.actualBoundingBoxDescent + 2);
                             ctx.fillText(m[0],
@@ -626,9 +626,9 @@ Game.getDrawingHeroes = function(){
                                         hero.screenX - width / 2,
                                         hero.screenY - 20 - height - 4
                                 );
-                            }                        
+                            }
                     }
-                     
+
                  }
             }),[hero, this.ctx]]);
     }
