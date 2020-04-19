@@ -98,8 +98,8 @@ $('[name="layer"]').change(function(){
                         width: 32,
                         height: 32,
                         display: 'inline-block',
-                        "background-position": (-32 * tile_map[obj][0]) + 'px ' + (-32 * tile_map[obj][1]) + 'px',
-                        'background-image': 'url(sprite/open_tileset.png)',
+                        "background-position": (-32 * tile_map[obj][1]) + 'px ' + (-32 * tile_map[obj][2]) + 'px',
+                        'background-image': tile_map[obj][0] == 0 ? 'url(sprite/open_tileset.png)' : 'url(sprite/moon_tileset.png)',
                 }).addClass('map-object').data('object', obj);
 
                 $('#label-object').append(object_dom);
@@ -114,7 +114,7 @@ $('#label-object').on('click', '.map-object', function(e){
 });
 if (localStorage.getItem('config')) {
     map.layers = JSON.parse(localStorage.getItem('config'));
-    
+
     updateLayerConfig();
 } else {
     Game.loadSample();
