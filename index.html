@@ -110,14 +110,14 @@ body {
 }
 
 @media only screen and (max-height: 500px){ /* narrow */
-	#controller .panel-body ul.nav { display: none; }
-	#controller .panel-heading { display: none; }
+	#controller ul.nav { display: none; }
+	#controller .card-header { display: none; }
 	#log-area { display: none; }
 }
 
 @media only screen and (max-width: 400px){ /* wide */
-	#controller .panel-body ul.nav { display: none; }
-	#controller .panel-heading { display: none; }
+	#controller ul.nav { display: none; }
+	#controller .card-header { display: none; }
 	#log-area { display: none; }
 	#controller {
 		width: 100%;
@@ -143,23 +143,20 @@ body {
 .nav-item .nav-link {
     padding: .3rem .6rem;
 }
+.text-sm { font-size: .8em }
 </style>
 </head>
 <body>
 <canvas id="game"></canvas>
-<div id="enter-area"><div class="card shadow-lg"><div class="card-body">
+<div id="enter-area"><div class="card shadow-lg"><div class="card-body" style="overflow:scroll">
         <form id="login-form">
             <h1 class="display-4 font-weight-bold">Welcome to swonline!</h1>
-            <p class="text-muted"> Online Memorial Ceremony </p>
             <div class="form-group mb-4">
               <label class="name-input">Your Name</label>
               <input type="text" id="name" class="form-control">
             </div>
-            <div class="form-group mb-4">
-              <label class="character-title">Choose Your Avatar</label>
-              <p class="character-input" id="character"></p>
-            </div>
-            <hr>
+            <label class="character-title">Choose Your Avatar</label>
+            <p class="mb-4 character-input" id="character"></p>
             <p class="button-area"><button type="submit" class="btn btn-primary btn-lg" href="#" role="button">Enter</button></p>
         </form>
 </div></div></div>
@@ -182,14 +179,15 @@ body {
         </ul>
 
     <div class="card-body">
-        <div class="panel-tab" id="panel-tab-info">
+        <div class="d-flex flex-column panel-tab text-sm" id="panel-tab-info">
+            <div>
             ➡️ 移動：使用方向鍵或點擊地圖上任何地方<br>
             ❤️ 說話：點擊上方表情符號<br>
             🎬 影片：點擊地圖上的影片，放大觀看<br>
             💁🏻‍♀️ 靠近 NPC 他們會說話喔<br>
-			<div id ="log-area">
-				Log:<br>
-				<textarea readonly="readonly" id="log" style="width: 100%; flex-grow: 2"></textarea>
+            </div>
+			<div id ="log-area" class="flex-grow-1">
+				<textarea class="h-100 w-100 form-control" readonly="readonly" id="log" style="flex-grow: 2"></textarea>
 			</div>
 			<div id="arrow-controller" style="display: none; position: fixed; bottom: 10px; left: 10px; ">
 				<img src="100px-Arrow_keys.svg.png" width="200%" height="200%">
