@@ -4,6 +4,12 @@ var map = {
     tsize: 32,
     layers: {ground: [], wall: [], object:[]},
     getTile: function (layer, col, row) {
+        if ('undefined' === typeof(this.layers[layer])) {
+            return null;
+        }
+        if ('undefined' === typeof(this.layers[layer][row * map.cols + col])) {
+            return null;
+        }
         return this.layers[layer][row * map.cols + col];
     },
     isSolidTileAtXY: function (x, y) {
@@ -39,7 +45,16 @@ function updateLayerConfig(){
             delete(map.layers[id]);
         }
     }
+    if (map.layers._cols) {
+        map.cols = map.layers._cols;
+    }
+    if (map.layers._rows) {
+        map.rows = map.layers._rows;
+    }
+    $('[name="rows"]').val(map.rows);
+    $('[name="cols"]').val(map.cols);
     $('#result').val(JSON.stringify(map.layers));
+
     localStorage.setItem('config', JSON.stringify(map.layers));
     calculateWallLayer();
 };
@@ -238,8 +253,8 @@ Game.update = function (delta) {
         diry = 1; row = 0;
     } else {
         row = this.heroes.me.row;
-        Game.isWayClick = false;
-    }
+        Game.isWayClick = false; 
+    } 
 
     if ($('[name="layer"]:checked').val() == 'result') {
         this.heroes.me.move(delta, dirx, diry);
@@ -305,7 +320,7 @@ Game.render = function () {
     } else if ($('[name="layer"]:checked').val() == 'wall') {
         objects = objects.concat(this.getDrawingWalls().map(function(o) { o[3] = 0.5; return o}));
         objects = objects.concat(this.getDrawingObjects().map(function(o) { o[3] = 0.5; return o}));
-
+        
     } else if ($('[name="layer"]:checked').val() == 'object') {
         objects = objects.concat(this.getDrawingWalls().map(function(o) { o[3] = 0.5; return o}));
         objects = objects.concat(this.getDrawingObjects());
