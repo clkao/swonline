@@ -18,6 +18,23 @@ body {
     overflow: hidden;
 }
 
+#member-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0
+}
+#member-list li {
+    display: block;
+    background: #eee;
+    margin: .25em;
+    padding: .25em;
+    flex: 1 0 auto;
+    border-radius: .25em;
+    font-size: .8em;
+}
+#member-list li span {
+    vertical-align: middle;
+}
 #game {
     position: absolute;
     right: 0px;
@@ -174,7 +191,7 @@ body {
         <ul class="text-sm nav nav-tabs" style="flex: 0">
             <li role="presentation" class="nav-item" id="nav-tab-info"><a class="nav-link active" href="#">資訊</a></li>
             <li role="presentation" class="nav-item" id="nav-tab-chat"><a class="nav-link" href="#">聊天</a></li>
-            <li role="presentation" class="nav-item" id="nav-tab-member"><a class="nav-link" href="#">成員(<span id="member-count">0</span>)</a></li>
+            <li role="presentation" class="nav-item" id="nav-tab-member"><a class="nav-link" href="#">成員(<span id="member-count-alt">0</span>)</a></li>
             <li role="presentation" class="nav-item" id="nav-tab-object"><a class="nav-link" href="#">物件(<span id="object-count">0</span>)</a></li>
         </ul>
 
@@ -484,6 +501,7 @@ function update_member_list() {
         c ++;
     }
     $('#member-count').text(c);
+    $('#member-count-alt').text(c);
 }
 
 function addLog(log) {
