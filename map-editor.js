@@ -203,6 +203,7 @@ Hero.prototype._collide = function (dirx, diry) {
 Game.load = function () {
     return [
         Loader.loadImage('tiles', 'sprite/open_tileset.png'),
+        Loader.loadImage('moon_tiles', 'sprite/moon_tileset.png')
     ];
 };
 
@@ -210,7 +211,7 @@ Game.init = function () {
     Keyboard.SPACE = 32;
     Keyboard.listenForEvents(
         [Keyboard.LEFT, Keyboard.RIGHT, Keyboard.UP, Keyboard.DOWN, Keyboard.SPACE]);
-    this.tileAtlas = Loader.getImage('tiles');
+    this.tileAtlas = [Loader.getImage('tiles'), Loader.getImage('moon_tiles')];
 
     this.heroes = {};
 	this.heroes.me = new Hero(map, 160, 160, 'teachers/Headmaster fmale', 'cursor');
@@ -253,8 +254,8 @@ Game.update = function (delta) {
         diry = 1; row = 0;
     } else {
         row = this.heroes.me.row;
-        Game.isWayClick = false; 
-    } 
+        Game.isWayClick = false;
+    }
 
     if ($('[name="layer"]:checked').val() == 'result') {
         this.heroes.me.move(delta, dirx, diry);
@@ -320,7 +321,7 @@ Game.render = function () {
     } else if ($('[name="layer"]:checked').val() == 'wall') {
         objects = objects.concat(this.getDrawingWalls().map(function(o) { o[3] = 0.5; return o}));
         objects = objects.concat(this.getDrawingObjects().map(function(o) { o[3] = 0.5; return o}));
-        
+
     } else if ($('[name="layer"]:checked').val() == 'object') {
         objects = objects.concat(this.getDrawingWalls().map(function(o) { o[3] = 0.5; return o}));
         objects = objects.concat(this.getDrawingObjects());
