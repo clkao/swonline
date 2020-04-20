@@ -168,11 +168,6 @@ body {
 }
 .text-sm { font-size: .8em }
 
-
-button#button-join-anyway {
-    display: none;
-}
-
 </style>
 </head>
 <body>
@@ -188,10 +183,6 @@ button#button-join-anyway {
             <p class="mb-4 character-input" id="character"></p>
             <p class="button-area text-center">
             <button type="submit" id="button-join" disabled class="btn btn-primary btn-lg" href="#" role="button">進入會場</button>
-            <button type="submit" id="button-join-anyway" class="btn btn-primary btn-lg" href="#" role="button">join anyway</button>
-            </p>
-            <p class="text-center">
-            <span>開放入場時間 4/21 08:45 (UTC+8)</span>
             </p>
         </form>
 </div></div></div>
@@ -324,19 +315,32 @@ button#button-join-anyway {
 let connection = null;
 let room = null;
 
-const startDate = new Date(Date.UTC(2020, 3, 21, 0, 45, 00));
+var startDate = new Date(Date.UTC(2020, 3, 21, 0, 45, 00));
 
-function enable_join() {
-    $("button#button-join").attr('disabled', null);
+function check_time() {
+	if (Date.now() >= startDate) {
+		$('#button-join').prop('disabled', false).text('進入會場');
+		return;
+	}
+	var delta = Math.floor((startDate - Date.now()) / 1000);
+	var h = Math.floor(delta / 3600);
+	var m = Math.floor(delta / 60) % 60;
+	var s = delta % 60;
+	var t = '';
+	if (h) {
+		t += h + '小時';
+	}
+	if (m) {
+		t += m + '分';
+	}
+	if (s) {
+		t += s + '秒';
+	}
+    $("button#button-join").text('距離開放入場 4/21 08:45 還有 ' + t);
+	setTimeout(check_time, 1000);
 }
 
-if (Date.now() < startDate) {
-    setTimeout(enable_join, startDate - Date.now());
-}
-else {
-    enable_join();
-}
-
+check_time();
 
 if (location.search.match(/room=([^&]*)/)) {
     var matches = location.search.match(/room=([^&]*)/);
