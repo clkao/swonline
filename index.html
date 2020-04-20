@@ -179,8 +179,9 @@ body {
               <label class="name-input">您的大名</label>
               <input type="text" id="name" class="form-control" maxlength="8">
             </div>
-            <label class="character-title">您的會場角色圖</label>
-            <p class="mb-4 character-input" id="character"></p>
+            <p>
+            <label class="character-title">您的會場角色圖</label><span id="selected-character"></span><button id="character-chooser" class="btn btn-primary" href="#">變更角色圖</button></p>
+            <p class="mb-4 character-input" id="character" style="display: none"></p>
             <p class="button-area text-center">
             <button type="submit" id="button-join" disabled class="btn btn-primary btn-lg" href="#" role="button">進入會場</button>
             </p>
@@ -497,10 +498,18 @@ if (!localStorage.getItem('character')) {
     $('#character .character').eq(Math.floor(Math.random() * characters.length)).addClass('choosed');
 }
 
+$('#selected-character').html( $('#character .character.choosed').clone().removeClass('choosed') );
+
+$('button#character-chooser').click(function(e) {
+    e.preventDefault();
+    $('#character').show();
+});
+
 $('#character .character').click(function(e){
     e.preventDefault();
     $('#character .character').removeClass('choosed');
     $(this).addClass('choosed');
+    $('#selected-character').html( $('#character .character.choosed').clone().removeClass('choosed') );
 });
 
 $('button.action-emoji').click(function(e){
