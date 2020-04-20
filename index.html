@@ -872,6 +872,7 @@ Game.onload(function(){
             $('#name').val(name);
             localStorage.setItem('name', name);
             localStorage.setItem('character', $('#character .character.choosed').data('character'));
+			Game.heroes.me.changeCharacter($('#character .character.choosed').data('character'));
             $('#enter-area').hide();
             $('#joined-form').show();
 
