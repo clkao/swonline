@@ -819,7 +819,7 @@ Game.onload(function(){
         $('#name').focus();
         $('#login-form').submit(function(e){
             e.preventDefault();
-            if ('ontouchstart' in window) {
+            if ('ontouchstart' in window and 'requestFullscreen' in document.body) {
                 document.body.requestFullscreen();
             }
 
