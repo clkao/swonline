@@ -318,7 +318,7 @@ let room = null;
 var startDate = new Date(Date.UTC(2020, 3, 21, 0, 45, 00));
 
 function check_time() {
-	if (Date.now() >= startDate) {
+	if ($('#name').val().match(/g0vrock/) || Date.now() >= startDate) {
 		$('#button-join').prop('disabled', false).text('進入會場');
 		return;
 	}
