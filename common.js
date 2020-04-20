@@ -396,11 +396,13 @@ var tile_map = {
     'flower_4': [1,5,1],
     'flower_5': [1,6,1],
     'flower_6': [1,7,1],
+    'pool_1': [0,12,18],
+    'pool_2': [0,13,18],
 };
 
 var tile_groups = {
     ground: [
-        ['ground', 'ground0', 'ground1', 'ground2', 'ground3', 'ground4', 'ground5', 'ground6', 'ground7', 'ground8', 'ground9', 'ground10']
+        ['ground', 'ground0', 'ground1', 'ground2', 'ground3', 'ground4', 'ground5', 'ground6', 'ground7', 'ground8', 'ground9', 'ground10', 'pool_1', 'pool_2']
     ],
     object: [
         ['chair', 'carpet1_1', 'carpet1_2', 'carpet1_3',          'tableA_1', 'tableA_2', 'deskA_1', 'deskA_2', 'deskB_1', 'deskB_2', 'deskC_1', 'deskC_2', 'deskD_1', 'deskD_2', 'deskE_1', 'deskE_2', 'deskF_1', 'deskF_2', 'deskG_1', 'deskG_2', 'deskH_1', 'deskH_2'],
