@@ -804,6 +804,10 @@ Game.onload(function(){
         $('#name').focus();
         $('#login-form').submit(function(e){
             e.preventDefault();
+            if ('ontouchstart' in window) {
+                document.body.requestFullscreen();
+            }
+
             var name = $('#name').val().substr(0, 8);
             $('#name').val(name);
             localStorage.setItem('name', name);
