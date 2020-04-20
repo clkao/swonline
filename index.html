@@ -165,20 +165,32 @@ body {
     padding: .3rem .6rem;
 }
 .text-sm { font-size: .8em }
+
+
+button#button-join-anyway {
+    display: none;
+}
+
 </style>
 </head>
 <body>
 <canvas id="game"></canvas>
 <div id="enter-area"><div class="card shadow-lg"><div class="card-body" style="overflow:scroll">
         <form id="login-form">
-            <h1 class="display-4 font-weight-bold">昇瑋線上追思會</h1>
+            <h1 class="display-4 font-weight-bold">歡迎來到陳昇瑋博士的線上追思會</h1>
             <div class="form-group mb-4">
-              <label class="name-input">Your Name</label>
+              <label class="name-input">您的大名</label>
               <input type="text" id="name" class="form-control" maxlength="8">
             </div>
-            <label class="character-title">Choose Your Avatar</label>
+            <label class="character-title">您的會場角色圖</label>
             <p class="mb-4 character-input" id="character"></p>
-            <p class="button-area"><button type="submit" class="btn btn-primary btn-lg" href="#" role="button">Enter</button></p>
+            <p class="button-area text-center">
+            <button type="submit" id="button-join" disabled class="btn btn-primary btn-lg" href="#" role="button">進入會場</button>
+            <button type="submit" id="button-join-anyway" class="btn btn-primary btn-lg" href="#" role="button">join anyway</button>
+            </p>
+            <p class="text-center">
+            <span>開放入場時間 4/21 08:45 (UTC+8)</span>
+            </p>
         </form>
 </div></div></div>
 <div class="card" id="controller">
@@ -309,6 +321,20 @@ body {
 <script>
 let connection = null;
 let room = null;
+
+const startDate = new Date(Date.UTC(2020, 3, 21, 0, 45, 00));
+
+function enable_join() {
+    $("button#button-join").attr('disabled', null);
+}
+
+if (Date.now() < startDate) {
+    setTimeout(enable_join, startDate - Date.now());
+}
+else {
+    enable_join();
+}
+
 
 if (location.search.match(/room=([^&]*)/)) {
     var matches = location.search.match(/room=([^&]*)/);
