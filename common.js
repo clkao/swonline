@@ -402,16 +402,10 @@ var tile_groups = {
         ['ground', 'ground0', 'ground1', 'ground2', 'ground3', 'ground4', 'ground5', 'ground6', 'ground7', 'ground8', 'ground9']
     ],
     object: [
-        ['chair', 'carpet1_1', 'carpet1_2', 'carpet1_3', 'tableA_1', 'tableA_2', 'flower_1', 'flower_2', 'flower_3', 'flower_4', 'flower_5', 'flower_6'],
-        ['screen_lt', 'screen_t', 'screen_rt', 'computer_table1', 'tableA_3', 'tableA_4'],
-        ['screen_l', 'screen_c', 'screen_r', 'computer_table2', 'bar_l', 'bar_d', 'bar_lr'],
-        ['screen_lb', 'screen_b', 'screen_rb', 'bar_u', 'bar_r','bar_ul', 'bar_ud'],
-        ['deskA_1', 'deskA_2', 'deskB_1', 'deskB_2', 'deskC_1', 'deskC_2', 'deskD_1', 'deskD_2'],
-        ['deskA_3', 'deskA_4', 'deskB_3', 'deskB_4', 'deskC_3', 'deskC_4', 'deskD_3', 'deskD_4'],
-        ['deskE_1', 'deskE_2', 'deskF_1', 'deskF_2', 'deskG_1', 'deskG_2', 'deskH_1', 'deskH_2'],
-        ['deskE_3', 'deskE_4', 'deskF_3', 'deskF_4', 'deskG_3', 'deskG_4', 'deskH_3', 'deskH_4'],
-        ['deskI_1', 'deskI_2', 'tableB_1', 'tableB_2'],
-        ['deskI_3', 'deskI_4', 'tableB_3', 'tableB_4'],
+        ['chair', 'carpet1_1', 'carpet1_2', 'carpet1_3',          'tableA_1', 'tableA_2', 'deskA_1', 'deskA_2', 'deskB_1', 'deskB_2', 'deskC_1', 'deskC_2', 'deskD_1', 'deskD_2', 'deskE_1', 'deskE_2', 'deskF_1', 'deskF_2', 'deskG_1', 'deskG_2', 'deskH_1', 'deskH_2'],
+        ['screen_lt', 'screen_t', 'screen_rt', 'computer_table1', 'tableA_3', 'tableA_4', 'deskA_3', 'deskA_4', 'deskB_3', 'deskB_4', 'deskC_3', 'deskC_4', 'deskD_3', 'deskD_4', 'deskE_3', 'deskE_4', 'deskF_3', 'deskF_4', 'deskG_3', 'deskG_4', 'deskH_3', 'deskH_4'],
+        ['screen_l', 'screen_c', 'screen_r', 'computer_table2', 'bar_l', 'bar_d', 'bar_lr', 'deskI_1', 'deskI_2', 'tableB_1', 'tableB_2', 'flower_1', 'flower_2', 'flower_3', 'flower_4', 'flower_5', 'flower_6'],
+        ['screen_lb', 'screen_b', 'screen_rb', 'bar_u', 'bar_r','bar_ul', 'bar_ud'        , 'deskI_3', 'deskI_4', 'tableB_3', 'tableB_4'],
     ]
 };
 
