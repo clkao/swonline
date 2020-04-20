@@ -807,7 +807,8 @@ Game.onload(function(){
         $('#name').focus();
         $('#login-form').submit(function(e){
             e.preventDefault();
-            var name = $('#name').val();
+            var name = $('#name').val().substr(0, 8);
+            $('#name').val(name);
             localStorage.setItem('name', name);
             localStorage.setItem('character', $('#character .character.choosed').data('character'));
             $('#enter-area').hide();
