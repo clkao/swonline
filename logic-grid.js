@@ -269,7 +269,7 @@ Game.init = function () {
     $('#game').attr('width', width).attr('height', height);
     this.heroes = {};
     var character = $('#character .character.choosed').data('character');
-	var name = $('#name').val();
+	var name = 'logining...';
     this.heroes.me = new Hero(map, 160, 160, character, name);
     this.heroes.me.textColor = 'orange';
     this.camera = new Camera(map, width, height);
