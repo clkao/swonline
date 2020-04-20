@@ -310,9 +310,10 @@ var tile_map = {
     'ground4': [0,4,0],
     'ground5': [0,5,0],
     'ground6': [0,6,0],
-    'ground7': [0,7,0],
+    'ground7': [0,14,0],
     'ground8': [1,0,5],
     'ground9': [1,0,4],
+    'ground10': [0,22,5],
 	'pile': [0,7,6],
 	'wall_': [0,0,2],
 	'wall_l': [0,2,2],
@@ -399,7 +400,7 @@ var tile_map = {
 
 var tile_groups = {
     ground: [
-        ['ground', 'ground0', 'ground1', 'ground2', 'ground3', 'ground4', 'ground5', 'ground6', 'ground7', 'ground8', 'ground9']
+        ['ground', 'ground0', 'ground1', 'ground2', 'ground3', 'ground4', 'ground5', 'ground6', 'ground7', 'ground8', 'ground9', 'ground10']
     ],
     object: [
         ['chair', 'carpet1_1', 'carpet1_2', 'carpet1_3',          'tableA_1', 'tableA_2', 'deskA_1', 'deskA_2', 'deskB_1', 'deskB_2', 'deskC_1', 'deskC_2', 'deskD_1', 'deskD_2', 'deskE_1', 'deskE_2', 'deskF_1', 'deskF_2', 'deskG_1', 'deskG_2', 'deskH_1', 'deskH_2'],
