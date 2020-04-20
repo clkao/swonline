@@ -592,7 +592,7 @@ Game.getDrawingHeroes = function(){
                      hero.screenY - 20
                  );
                  ctx.textAlign = 'center';
-                 ctx.fillStyle = "white";
+                 ctx.fillStyle = hero.textColor || "white";
                  ctx.fillText(hero.name,
                      hero.screenX,
                      hero.screenY - 20
