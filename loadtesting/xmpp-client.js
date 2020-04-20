@@ -22,6 +22,8 @@ xmpp.on("stanza", async (stanza) => {
     }
 });
 
+const maxMove = 2000;
+
 
 function delay(t, val) {
     return new Promise(function(resolve) {
@@ -80,18 +82,21 @@ xmpp.on('online', async address => {
         ),
         'focus.jitsi.jothon.online',
     );
-    var current_top = Math.floor(Math.random() * 30) * 32;
-    var current_left = Math.floor(Math.random() * 30) * 32;
+    var current_top = Math.floor(Math.random() * 35) * 32;
+    var current_left = Math.floor(Math.random() * 45) * 32;
     const key = randHex(8);
     const nick = 'xmpp-' + key;
-    for (var i = 0; i < 100; ++i) {
-        current_top += 32 * (Math.floor(Math.random() * 3) - 1)
-        current_left += 32 * (Math.floor(Math.random() * 3) - 1)
+    for (var i = 0; i < maxMove; ++i) {
+        current_top += Math.max(0, Math.min(1072, 32 * (Math.floor(Math.random() * 3) - 1)));
+        current_left += Math.max(0, Math.min(1392, 32 * (Math.floor(Math.random() * 3) - 1)));
         await update_presence(key, nick, current_top, current_left);
         if(Math.random() > 0.95) {
             await send_message(nick, "❤️")
         }
-        await delay(2000);
+        if(Math.random() > 0.95) {
+            await send_message(nick, "🌸")
+        }
+        await delay(5000);
 
     }
 })
