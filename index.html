@@ -203,9 +203,7 @@ body {
             🎬 影片：點擊地圖上的影片，放大觀看<br>
             💁🏻‍♀️ 靠近 NPC 他們會說話喔<br>
             </div>
-			<div id ="log-area" class="flex-grow-1">
-				<textarea class="h-100 w-100 form-control" readonly="readonly" id="log" style="flex-grow: 2"></textarea>
-			</div>
+            <button class="btn btn-info" id="about-this">關於本站</button>
 			<div id="arrow-controller" style="display: none; position: fixed; bottom: 10px; left: 10px; ">
 				<img src="100px-Arrow_keys.svg.png" width="200%" height="200%">
 			</div>
@@ -848,24 +846,30 @@ function unload() {
 var iframe_click = function(e){
 	e.preventDefault();
     if ($(this).is('.max')) {
-        $('iframe', this.parentNode).css({
-            position: 'relative',
-            left: '0px',
-            top: '0px',
-            width: '100%',
-            height: '100%',
-            'z-index': 10,
-        });
-        $(this).css({
-            position: 'absolute',
-            left: '0px',
-            top: '0px',
-            width: '100%',
-            height: '100%',
-            'z-index': 15,
-        });
+        if ($(this).is('.min-hide')) {
+            $(this.parentNode).hide();
+        } else {
+            $('iframe', this.parentNode).css({
+                position: 'relative',
+                left: '0px',
+                top: '0px',
+                width: '100%',
+                height: '100%',
+                'z-index': 10,
+            });
+            $(this).css({
+                position: 'absolute',
+                left: '0px',
+                top: '0px',
+                width: '100%',
+                height: '100%',
+                'z-index': 15,
+            });
+        }
         $(this).removeClass('max');
     } else {
+        $(this.parentNode).show();
+
         $('iframe', this.parentNode).css({
             position: 'fixed',
             left: '50px',
@@ -926,6 +930,19 @@ if ('ontouchstart' in window) {
 		Keyboard._keys[Keyboard.UP] = Keyboard._keys[Keyboard.DOWN] = Keyboard._keys[Keyboard.LEFT] = Keyboard._keys[Keyboard.RIGHT] =  false;
 	});
 }
+
+$('#about-this').click(function(e){
+    e.preventDefault();
+    iframe_url = 'https://g0v.hackmd.io/@qsl-tuBOSqqgZqsmYAFtzA/HkkcvJiu8#/';
+    if (!$('#iframe-about').length) {
+        var iframe_dom = $('<div></div>').attr('id', 'iframe-about');
+        iframe_dom.append($('<iframe allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"></iframe>').attr('src', iframe_url).css({margin: 0, padding: 0, border: 0, width: '100%', height: '100%', "z-index": 10}));
+        iframe_dom.append($('<div></div>').css({position: 'absolute', left: 0, top: 0, width: '100%', height: '100%', 'z-index': 15, cursor: 'pointer'}).addClass('iframe-div-area').addClass('min-hide'));
+        $('body').append(iframe_dom);
+    }
+    iframe_dom = $('#iframe-about');
+    $('.iframe-div-area', iframe_dom).click();
+});
 
 </script>
 </body>
