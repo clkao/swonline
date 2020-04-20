@@ -8,6 +8,8 @@
 <script src="common.js?"></script>
 <script src="logic-grid.js?"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.27/bootstrap-native-v4.min.js"></script>
 <!--
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css">
@@ -291,6 +293,19 @@ body {
     </script>
 </div>
 <div id="video-pool" style="display:none"></div>
+<div id="toast-area" style="position: absolute; bottom: 30px; right: 30px; z-index: 40"></div>
+<script id="tmpl-toast" type="text/html">
+<div class="toast" data-autohide="false">
+  <div class="toast-header">
+    <svg class="bd-placeholder-img rounded mr-2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#007aff"></rect></svg>
+    <strong class="mr-auto">Bootstrap</strong>
+    <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="toast-body"></div>
+</div>
+</script>
 <script>
 let connection = null;
 let room = null;
@@ -575,7 +590,9 @@ function onConferenceJoined() {
 				Game.heroes[id].x = Game.heroes[id].target_x = message.message[0];
 				Game.heroes[id].y = Game.heroes[id].target_y = message.message[1];
 			}
-        }
+        } else if (message.type == 'announcement') {
+			add_toast('公告', message.message);
+		}
     });
     room.on(JitsiMeetJS.events.conference.DISPLAY_NAME_CHANGED, (id, name) => {
         addLog(Game.heroes[id].name + ' changed name to ' + name);
@@ -945,6 +962,30 @@ $('#about-this').click(function(e){
     iframe_dom = $('#iframe-about');
     $('.iframe-div-area', iframe_dom).click();
 });
+
+var add_toast = function(title, body, color, callback, id){
+    var dom = $($('#tmpl-toast').html());
+    $('.mr-auto', dom).text(title);
+    $('.toast-body', dom).text(body);
+    if (id) {
+        if ($('#toast-' + id).length) {
+            return;
+        }
+        dom.attr('id', 'toast-' + id);
+    }
+    if (callback) {
+        $('.toast-body', dom).append(
+            $('<form></form>').append($('<button type="submit">OK</button>')).submit(function(e){
+                e.preventDefault();
+                callback();
+                $(this).parents('.toast').find('.close').click();
+            })
+        );
+    }
+    $('rect', dom).attr('fill', color);
+    $('#toast-area').append(dom);
+    dom.toast('show');
+};
 
 </script>
 </body>
