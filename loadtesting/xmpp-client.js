@@ -87,8 +87,10 @@ xmpp.on('online', async address => {
     const key = randHex(8);
     const nick = 'xmpp-' + key;
     for (var i = 0; i < maxMove; ++i) {
-        current_top += Math.max(0, Math.min(1072, 32 * (Math.floor(Math.random() * 3) - 1)));
-        current_left += Math.max(0, Math.min(1392, 32 * (Math.floor(Math.random() * 3) - 1)));
+        current_top += 32 * (Math.floor(Math.random() * 3) - 1);
+        current_top = Math.max(0, Math.min(1072, current_top));
+        current_left += 32 * (Math.floor(Math.random() * 3) - 1);
+        current_left = Math.max(0, Math.min(1392, current_left));
         await update_presence(key, nick, current_top, current_left);
         if(Math.random() > 0.95) {
             await send_message(nick, "❤️")
