@@ -194,7 +194,7 @@ body {
             <label class="character-title">您的會場角色圖</label><span id="selected-character"></span><button id="character-chooser" class="btn btn-primary" href="#">選擇</button></p>
             <p class="mb-4 character-input" id="character" style="display: none"></p>
             <p class="button-area text-center">
-            <button type="submit" id="button-join" disabled class="btn btn-primary btn-lg" href="#" role="button">進入會場</button>
+            <button type="submit" id="button-join" disabled class="btn btn-primary btn-lg" href="#" role="button">活動已結束</button>
             </p>
         </form>
 </div></div></div>
@@ -345,7 +345,7 @@ function check_time() {
 	setTimeout(check_time, 1000);
 }
 
-check_time();
+//check_time();
 
 if (location.search.match(/room=([^&]*)/)) {
     var matches = location.search.match(/room=([^&]*)/);
